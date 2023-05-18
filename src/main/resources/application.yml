@@ -1,0 +1,41 @@
+
+
+spring:
+  # 数据库链接配置
+  datasource:
+    url: jdbc:mysql://localhost:3306/order?useUnicode=true&characterEncoding=UTF8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=UTC
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: redhat
+    # 链接池
+    type: com.alibaba.druid.pool.DruidDataSource
+    druid:
+      # 链接池初始化大小
+      initial-size: 8
+      # 最大活跃数
+      max-active: 16
+      # 最小空闲数
+      min-idle: 1
+      # 最大等待时间
+      max-wait: 60000
+# mybatis配置
+#mybatis:
+#  check-config-location: true
+#  #  mybatis框架配置文件，对mybatis的生命周期起作用
+#  config-location: "classpath:mybatis/mybatis-config.xml"
+#  #  配置xml路径
+#  mapper-locations: "classpath:mybatis/mapper/*Mapper.xml"
+  #  配置model包路径
+#  type-aliases-package: "com.example.awesomespring.dao.entity.*"
+
+# 日志配置
+logging:
+  pattern:
+    # 日志输出格式
+    console: "%d{yyyy-MM-dd HH:mm:ss} %clr(%5p) [%thread] %clr(%logger){cyan} : %msg%n"
+  level:
+    #    trace < debug < info < warn < error < fatal
+    # 全局日志级别
+    root: info
+    # 指定包日志级别
+    com.example.awesomespring: warn
