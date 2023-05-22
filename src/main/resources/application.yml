@@ -19,14 +19,14 @@ spring:
       # 最大等待时间
       max-wait: 60000
 # mybatis配置
-#mybatis:
-#  check-config-location: true
-#  #  mybatis框架配置文件，对mybatis的生命周期起作用
-#  config-location: "classpath:mybatis/mybatis-config.xml"
-#  #  配置xml路径
-#  mapper-locations: "classpath:mybatis/mapper/*Mapper.xml"
-  #  配置model包路径
-#  type-aliases-package: "com.example.awesomespring.dao.entity.*"
+mybatis:
+  check-config-location: true
+  #  mybatis框架配置文件，对mybatis的生命周期起作用
+  config-location: "classpath:mybatis/mybatis-config.xml"
+  #  配置xml路径
+  mapper-locations: "classpath:mybatis/mapper/*Mapper.xml"
+#  #配置model包路径
+  type-aliases-package: "com.openwell.flashsale.mall.model.*"
 
 # 日志配置
 logging:
