@@ -25,7 +25,11 @@ public class KillGoodsContoller extends BaseController {
         return "testLog";
     }
 
-
+    /**
+     * 通过数据库的方式秒杀库存实现
+     * @param killId
+     * @return
+     */
     @PostMapping("killByDb")
     public HttpResponseBody killByDb(int killId){
         KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
@@ -41,6 +45,54 @@ public class KillGoodsContoller extends BaseController {
         }
         return HttpResponseBody.successResponse("ok",  killGoods);
     }
+
+
+    /**
+     * 通过redis ByIncrBy 实现秒杀
+     * @param killId
+     * @return
+     */
+    @PostMapping("killByIncrBy")
+    public HttpResponseBody killByIncrBy(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.killByIncrBy(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+    /**
+     * 通过redis ByIncrBy 实现秒杀
+     * @param killId
+     * @return
+     */
+    @PostMapping("killByIncrBy")
+    public HttpResponseBody killByLua(int killId){
+        KillGoodsSpecPriceDetailVo killGoods = killGoodsService.detail(killId);
+        if (killGoods.getBegainTime().getTime() > System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购还未开始");
+        }
+        if (killGoods.getEndTime().getTime() < System.currentTimeMillis()){
+            return HttpResponseBody.failResponse("抢购已结束");
+        }
+        if (!killGoodsService.killByLua(killId,getSessionUserId())){
+            log.info("----抢购失败----");
+            return HttpResponseBody.failResponse("抢购失败");
+        }
+        return HttpResponseBody.successResponse("ok",  killGoods);
+    }
+
+
+
+
+
 
 
 
